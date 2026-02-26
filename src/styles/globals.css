@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+@theme {
+  /* ========== Colors ========== */
+  /* Gray colors */
+  --color-boxGray: #f5f6fa;
+  --color-textGray: #111827;
+  --color-textGray300: #d1d5db;
+  --color-textGray500: #6b7280;
+  --color-textGray600: #4b5563;
+  --color-textGray700: #374151;
+  --color-textGray800: #1f2937;
+  --color-textGray900: #111827;
+
+  /* Red colors */
+  --color-redText: #be161d;
+
+  /* Blue colors */
+  --color-seeAllBlue: #1e94f6;
+  --color-textBlue50: #eefaff;
+  --color-textBlue200: #bcebff;
+  --color-textBlue800: #1662b7;
+  --color-textBlue950: #143357;
+  --color-textBlue900: #185390;
+  --color-textBlue100: #D9F3FF;
+
+  /* Green colors */
+  --color-textGreen50: #f4f9f4;
+  --color-textGreen300: #a4d1a7;
+  --color-textGreen700: #346138;
+
+  /* ========== Font Family ========== */
+  --font-family-iransans: 'IRANSansXFaNum', sans-serif;
+
+  /* ========== Font Weights ========== */
+  --font-weight-demibold: 600;
+
+  /* ========== Background Images / Gradients ========== */
+  --gradient-diagonal: linear-gradient(to bottom left, #2c5282, #90cdf4);
+  --gradient-progress: linear-gradient(to bottom left, #d9f3ff, #8de0ff);
+}
+
+/* ========== Custom Utilities ========== */
+@utility bg-diagonal-gradient {
+  background-image: linear-gradient(to bottom left, #2c5282, #90cdf4);
+}
+
+@utility bg-progress-gradient {
+  background-image: linear-gradient(to bottom left, #d9f3ff, #8de0ff);
+}
+
+@utility no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ========== Global Styles ========== */
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply antialiased;
+    direction: rtl;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-boxGray);
+    font-family: var(--font-family-iransans);
+  }
+
+  input,
+  textarea,
+  select {
+    direction: rtl;
+  }
+}
