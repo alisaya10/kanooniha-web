@@ -21,3 +21,22 @@ export function toJalaliFarsi(value: string | undefined | null): string {
   }
   return m.locale('fa').format(JALALI_FORMAT)
 }
+
+const JALALI_TEXT_FORMAT = 'jD jMMMM jYYYY'
+
+export function toJalaliTextFarsi(value: string | undefined | null): string {
+  if (!value || String(value).trim() === '') return ''
+
+  const date = value.trim()
+
+  const formats = ['YYYY-MM-DDTHH:mm:ss.SSS', 'YYYY-MM-DDTHH:mm:ss', 'YYYY-MM-DD']
+
+  for (const format of formats) {
+    const m = moment.from(date, 'en', format)
+    if (m.isValid()) {
+      return m.locale('fa').format(JALALI_TEXT_FORMAT)
+    }
+  }
+
+  return String(value)
+}

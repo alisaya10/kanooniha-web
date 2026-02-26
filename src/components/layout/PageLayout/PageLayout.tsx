@@ -12,6 +12,7 @@ const PageLayout = ({
   minHeight = 500,
   hasData,
   hasDataTitle,
+  hasDataPosition = 'center',
 }: {
   title: string
   backLink: string
@@ -20,6 +21,7 @@ const PageLayout = ({
   minHeight?: number
   hasData?: false
   hasDataTitle?: ''
+  hasDataPosition?: string
 }) => (
   <div className="bg-white lg:rounded-2xl lg:min-h-full min-h-dvh pb-20">
     <div className="py-4 lg:block hidden">
@@ -37,12 +39,14 @@ const PageLayout = ({
       </Link>
     </div>
     <div
-      className={`${grayParent ? `bg-boxGray rounded-xl py-6 px-4 relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6` : 'bg-white rounded-xl py-6 px-4 relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6'}`}
+      className={`${grayParent ? `bg-boxGray rounded-xl py-6 px-4 relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6` : 'bg-white rounded-xl relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6'}`}
     >
       {children}
 
       {!hasData && (
-        <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div
+          className={`flex flex-col items-center space-y-6 absolute ${hasDataPosition == 'center' ? 'top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2' : hasDataPosition == 'left' ? 'left-1/7 top-1/4' : hasDataPosition == 'right' ? 'right-1/7 top-1/4' : ''} `}
+        >
           <img src={notFoundImage} className="h-[155px]" alt="not-found-news-image" />
           <p className="font-bold text-base">{hasDataTitle}</p>
         </div>

@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import moment from 'jalali-moment'
 
+import clockImage from '@/assets/icons/clock-icon.png'
+import personImage from '@/assets/icons/profile-icon.png'
 import Button from '@/components/common/Button/Button'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import CustomJalaliCalendar from '@/components/common/Calendar/CustomJalaliCalendar'
@@ -13,6 +15,7 @@ import {
   type DailyEventItem,
 } from '@/queries/events'
 import { PATHS } from '@/routes/paths'
+import { toJalaliFarsi, toJalaliTextFarsi } from '@/utils/date'
 
 const getInitialDateRange = () => {
   const today = moment()
@@ -74,69 +77,18 @@ const Events = () => {
     )
   }
 
-  const toPersianDigits = useMemo(() => {
-    const map: Record<string, string> = {
-      '0': '۰',
-      '1': '۱',
-      '2': '۲',
-      '3': '۳',
-      '4': '۴',
-      '5': '۵',
-      '6': '۶',
-      '7': '۷',
-      '8': '۸',
-      '9': '۹',
-      '/': '/',
-    }
-    return (val?: string) => (val ?? '').replace(/[0-9/]/g, (d) => map[d] ?? d)
-  }, [])
-
-  const checkEventTime = (eventDate: string): 'active' | 'not_started' | 'passed' => {
-    if (!eventDate) return 'not_started'
-
-    const eventDateTime = new Date(eventDate)
-    const now = new Date()
-
-    // مقایسه فقط بر اساس تاریخ (بدون ساعت)
-    const eventDateOnly = new Date(
-      eventDateTime.getFullYear(),
-      eventDateTime.getMonth(),
-      eventDateTime.getDate(),
-    )
-    const todayDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-
-    // اگر تاریخ رویداد قبل از امروز باشد
-    if (eventDateOnly < todayDateOnly) {
-      return 'passed'
-    }
-
-    // اگر تاریخ رویداد بعد از امروز باشد
-    if (eventDateOnly > todayDateOnly) {
-      return 'not_started'
-    }
-
-    // اگر تاریخ رویداد همان امروز باشد
-    // اگر زمان رویداد هنوز نرسیده
-    if (now < eventDateTime) {
-      return 'not_started'
-    }
-
-    // اگر زمان رویداد گذشته باشد (بیش از 24 ساعت گذشته)
-    const hoursDiff = (now.getTime() - eventDateTime.getTime()) / (1000 * 60 * 60)
-    if (hoursDiff > 24) {
-      return 'passed'
-    }
-
-    // اگر در همان روز و زمان رویداد گذشته اما کمتر از 24 ساعت
-    return 'active'
-  }
-
   return (
-    <PageLayout title="رویداد ها" backLink={PATHS.Dashboard} grayParent={false} hasData={dailyEvents.length} hasDataTitle="رویدادی برای نمایش وجود ندارد.">
+    <PageLayout
+      title="رویداد ها"
+      backLink={PATHS.Dashboard}
+      grayParent={false}
+      hasData={dailyEvents.length}
+      hasDataTitle="رویدادی برای نمایش وجود ندارد."
+      hasDataPosition="left"
+    >
       <LoaderTryAgainButton onClick={handleRetry} error={error} isLoading={isLoading} />
 
       <div className="flex gap-5 lg:flex-row flex-col">
-
         <div className="lg:w-1/2">
           <CustomJalaliCalendar
             eventCounts={eventCounts}
@@ -149,49 +101,43 @@ const Events = () => {
         <div className="lg:w-1/2 space-y-3">
           {dailyEvents.map((event) => (
             <div key={event.eventId} className="bg-boxGray rounded-lg p-3 space-y-3">
-              <div className="flex justify-between">
-                <p className="text-sm">
-                  تاریخ:{' '}
-                  {/* {toPersianDigits(convertToJalali(
-                                            event.eventDate || selectedDate
-                                        ))} */}
-                  {event.eventDate && (
-                    <>
-                      {' - '}
-                      {toPersianDigits(
-                        new Date(event.eventDate).toLocaleTimeString('fa-IR', {
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          hour12: false,
-                        }),
-                      )}
-                      {' ساعت'}
-                    </>
-                  )}
+              <p className="text-textGray700 font-bold text-sm">{event.description}</p>
+              <div className="flex items-center space-x-1">
+                <img className="w-5 h-5" src={personImage} />
+                <p className="text-textGray700 font-medium text-sm">مدرس: بابک اسلامی</p>
+              </div>
+              <div className="flex items-center space-x-1">
+                <img className="w-5 h-5" src={clockImage} />
+                <p className="text-textGray700 font-medium text-sm">
+                  زمان شروع: {toJalaliTextFarsi(event.eventDate)} ساعت{' '}
+                  {new Date(event.eventDate).toLocaleTimeString('fa-IR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  })}
                 </p>
               </div>
-
-              <p className="text-sm">{event.description || 'توضیحات رویداد'}</p>
+              <div className="w-full flex items-center justify-end">
+                <p className="text-textGray700">
+                  {new Date(event.eventDate).toLocaleTimeString('fa-IR', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                  })}{' '}
+                  | {toJalaliFarsi(event.eventDate)}
+                </p>
+              </div>
 
               {event.roomId != null && (event.apiType === 0 || event.apiType === 1) && (
                 <Button
                   onClick={(e) => {
-                    e.preventDefault()
-                    const timeStatus = checkEventTime(event.eventDate)
-                    if (timeStatus === 'active') {
-                      handleEventSkyRoom(event.roomId, event.apiType)
-                    } else if (timeStatus === 'not_started') {
-                      setModalMessage('هنوز رویداد شروع نشده است')
-                      modalRef.current?.open()
-                    } else if (timeStatus === 'passed') {
-                      setModalMessage('زمان ورود به رویداد گذشته است')
-                      modalRef.current?.open()
-                    }
+                    // e.preventDefault()
+                    handleEventSkyRoom(event.roomId, event.apiType)
                   }}
-                  disabled={
-                    checkEventTime(event.eventDate) === 'passed' ||
-                    skyRoomMutation.isPending
-                  }
+                  // disabled={
+                  //   checkEventTime(event.eventDate) === 'passed' ||
+                  //   skyRoomMutation.isPending
+                  // }
                   className="w-full"
                 >
                   ورود به جلسه
@@ -200,9 +146,6 @@ const Events = () => {
             </div>
           ))}
         </div>
-
-        {/* Calendar */}
-
       </div>
 
       {/* Modal for Event Time Messages */}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import moment from 'jalali-moment'
+
 import leftArrowIcon from '@/assets/icons/arrow-left-icon.png'
 import rightArrowIcon from '@/assets/icons/arrow-right-icon.png'
 
@@ -59,37 +60,18 @@ const CustomJalaliCalendar = ({
     onMonthChange?.(fromDateGregorian, toDateGregorian)
   }
 
-  const goToToday = () => {
-    const today = moment().startOf('jDay')
-    setCurrentMonth(today.clone().startOf('jMonth'))
-
-    // اول ماه شمسی جاری را به میلادی تبدیل می‌کنیم
-    const firstDayJalali = today.clone().startOf('jMonth')
-    // آخر ماه شمسی جاری را به میلادی تبدیل می‌کنیم
-    const lastDayJalali = today.clone().endOf('jMonth')
-
-    // تبدیل به تاریخ میلادی
-    const fromDateGregorian = firstDayJalali.locale('en').format('YYYY-MM-DD')
-    const toDateGregorian = lastDayJalali.locale('en').format('YYYY-MM-DD')
-
-    onMonthChange?.(fromDateGregorian, toDateGregorian)
-
-    // انتخاب امروز
-    onSelectDate(today.clone().locale('en').format('YYYY-MM-DD'))
-  }
 
   return (
     <div className="  bg-boxGray rounded-xl p-4 w-full font-iransans">
       <div className="bg-white rounded-lg p-4">
-
         {/* Header */}
-        <div className="flex justify-between items-center mb-4 text-sm font-iransans">
+        <div className="flex justify-between items-center mb-3 text-sm font-iransans">
           <button
             onClick={() => changeMonth(-1)}
-            className="flex items-center gap-2 cursor-pointer"
             aria-label="ماه قبل"
+            className="flex items-center cursor-pointer gap-1"
           >
-            <img className='w-6 h-6' src={rightArrowIcon} alt="left-arrow" />
+            <img className="w-6 h-6" src={rightArrowIcon} alt="left-arrow" />
             <p>ماه قبل</p>
           </button>
 
@@ -98,20 +80,18 @@ const CustomJalaliCalendar = ({
             {monthNames[currentMonth.jMonth()]} {currentMonth.format('jYYYY')}
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => changeMonth(1)}
-              aria-label="ماه بعد"
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              <p>ماه بعد</p>
-              <img className='w-6 h-6' src={leftArrowIcon} alt="right-arrow" />
-            </button>
-          </div>
+          <button
+            onClick={() => changeMonth(1)}
+            aria-label="ماه بعد"
+            className="flex items-center cursor-pointer gap-1"
+          >
+            <p>ماه بعد</p>
+            <img className="w-6 h-6" src={leftArrowIcon} alt="right-arrow" />
+          </button>
         </div>
 
         {/* Week days */}
-        <div className="grid grid-cols-7 text-center text-xs mb-3">
+        <div className="grid grid-cols-7 text-center text-xs mb-[18px]">
           {weekDays.map((d) => (
             <div key={d}>{d}</div>
           ))}
@@ -141,27 +121,44 @@ const CustomJalaliCalendar = ({
             const isToday = moment().isSame(dayMoment, 'day')
 
             return (
-              <div className='flex flex-col items-center justify-center'>
-              <div
-                key={i}
-                onClick={() => onSelectDate(gregorianDate)}
-                className={`border  w-9 h-9 rounded-lg  flex items-center justify-center cursor-pointer transition
-                ${isSelected ? 'bg-blue-500 text-white' : ''}
-                ${isToday ? 'border-gray-300 bg-blue-200' : 'border-gray-300'}
+              <div className="flex flex-col items-center justify-center">
+                <div
+                  key={i}
+                  onClick={() => onSelectDate(gregorianDate)}
+                  className={`
+                    border w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer transition
+                    ${isSelected
+                      ? 'bg-blue-500 text-white border-0'
+                      : isToday
+                        ? 'bg-textBlue100 text-textBlue800 border-0'
+                        : 'border-gray-300'
+                    }
+                  
               `}
-              >
-                {/* نمایش شمسی */}
-                <div className={`flex flex-col items-center justify-center text-sm text-textGray700 font-iransans ${isSelected ? 'text-white' : ''}`}>{dayMoment.format('jD')}{isToday ? <span className='text-[8px] text-white'>امروز</span> : ''}</div>
-              </div>
-            {
-              count > 0 ?(
-                <div className="text-[9px] w-9 h-3 bg-textBlue100 rounded-full flex items-center justify-center mt-[2px] font-iransans">
-                  {count} رویداد
+                >
+                  {/* نمایش شمسی */}
+                  <div
+                    className={`flex text-xs flex-col items-center justify-center font-bold ${isSelected ? 'text-white' : isSelected && isToday ? 'text-blue-600' : 'text-textGray700'}`}
+                  >
+                    {dayMoment.format('jD')}
+                    {
+                      <span
+                        className={`text-[8px] ${isSelected ? 'text-white' : isSelected && isToday ? 'text-white ' : 'text-textGray700'} `}
+                      >
+                        {isToday ? 'امروز' : ''}
+                      </span>
+                    }
+                  </div>
                 </div>
-              ) : <div className='w-0 h-0'></div>
-            }
-            </div>
-          )
+                {count > 0 ? (
+                  <div className="text-[9px] w-9 h-3 bg-textBlue100 text-textBlue800 rounded-full flex items-center justify-center mt-[2px] font-iransans">
+                    {count} رویداد
+                  </div>
+                ) : (
+                  <div className="w-9 h-3"></div>
+                )}
+              </div>
+            )
           })}
         </div>
       </div>
