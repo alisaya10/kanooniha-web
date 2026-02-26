@@ -19,7 +19,7 @@ const SingleMessage = () => {
   }, [message?.id, visitMessage])
 
   return (
-    <PageLayout title="جزییات پیام" backLink={PATHS.Dashboard} minHeight={0}>
+    <PageLayout title="جزییات پیام" backLink={PATHS.Dashboard} hasData={message?.id} hasDataTitle="پیامی برای نمایش وجود ندارد." minHeight={0}>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <p className="lg:text-base text-sm font-bold">{message?.title}</p>

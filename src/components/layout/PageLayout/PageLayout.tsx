@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import backIcon from '@/assets/icons/back-icon.png'
 import borderImage from '@/assets/images/border-image.png'
-import notFoundImage from '@/assets/images/not-found-image.png'
+import notFoundImage from '@/assets/images/not-found-news-image.png'
 
 const PageLayout = ({
   title,
@@ -20,7 +20,7 @@ const PageLayout = ({
   grayParent?: boolean
   minHeight?: number
   hasData?: false
-  hasDataTitle?: ''
+  hasDataTitle?: string
   hasDataPosition?: string
 }) => (
   <div className="bg-white lg:rounded-2xl lg:min-h-full min-h-dvh pb-20">
@@ -39,7 +39,7 @@ const PageLayout = ({
       </Link>
     </div>
     <div
-      className={`${grayParent ? `bg-boxGray rounded-xl py-6 px-4 relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6` : 'bg-white rounded-xl relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6'}`}
+      className={`${grayParent ? `bg-boxGray rounded-xl py-6 px-4 relative min-h-[${minHeight}px] lg:mx-6 mx-3 my-6` : 'bg-white rounded-xl relative min-h-[${minHeight}px]'}`}
     >
       {children}
 

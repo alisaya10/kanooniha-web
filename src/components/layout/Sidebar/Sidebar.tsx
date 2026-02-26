@@ -77,7 +77,7 @@ const Sidebar = () => {
                 <img className="w-8 h-8" alt={`sidebar-item-${index}`} src={prop.icon} />
               </div>
               <p className="font-demibold text-base text-blue-900">{prop.name}</p>
-              {index == 3 && (
+              {index == 3 && activeEventCount > 0 && (
                 <div className="bg-red-500 w-5 h-5 flex items-center justify-center rounded-full">
                   <p className="text-white">{activeEventCount}</p>
                 </div>

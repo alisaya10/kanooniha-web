@@ -4,26 +4,23 @@ import { Link, useNavigate } from 'react-router-dom'
 import messageIcon from '@/assets/icons/message-icon.png'
 import notFoundImage from '@/assets/images/not-found-image.png'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
-import { useMessagesList } from '@/queries/messages/useMessages'
+import type { MessageListItem } from '@/queries/messages/useMessages'
 import { PATHS } from '@/routes/paths'
 
-const AllMessages = ({ showSeeAll }: { showSeeAll: boolean }) => {
+const AllMessages = ({
+  messages,
+  showSeeAll,
+  getMessages,
+  error,
+  isLoading,
+}: {
+  messages: MessageListItem[]
+  showSeeAll: boolean
+  getMessages: () => void
+  error: Error | null
+  isLoading: boolean
+}) => {
   const navigate = useNavigate()
-  const {
-    data: rawMessages = [],
-    isLoading,
-    isError: error,
-    refetch: getMessages,
-  } = useMessagesList()
-
-  const filteredData = useMemo(
-    () => (rawMessages ?? []).filter((msg) => !msg?.filePath),
-    [rawMessages],
-  )
-  const messages = useMemo(
-    () => (showSeeAll ? filteredData.slice(0, 4) : filteredData),
-    [filteredData, showSeeAll],
-  )
 
   return (
     <div className="lg:mx-0 mx-3">

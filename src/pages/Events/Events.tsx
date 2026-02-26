@@ -88,7 +88,7 @@ const Events = () => {
     >
       <LoaderTryAgainButton onClick={handleRetry} error={error} isLoading={isLoading} />
 
-      <div className="flex gap-5 lg:flex-row flex-col">
+      <div className="flex gap-5 lg:flex-row flex-col lg:mx-6 mx-3 my-6">
         <div className="lg:w-1/2">
           <CustomJalaliCalendar
             eventCounts={eventCounts}

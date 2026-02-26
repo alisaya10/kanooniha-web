@@ -5,6 +5,7 @@
   /* Gray colors */
   --color-boxGray: #f5f6fa;
   --color-textGray: #111827;
+  --color-textGray200: #e5e7eb;
   --color-textGray300: #d1d5db;
   --color-textGray500: #6b7280;
   --color-textGray600: #4b5563;
@@ -28,6 +29,9 @@
   --color-textGreen50: #f4f9f4;
   --color-textGreen300: #a4d1a7;
   --color-textGreen700: #346138;
+
+  /* ًRed colors */
+  --color-textRed500: #ed1c24;
 
   /* ========== Font Family ========== */
   --font-family-iransans: 'IRANSansXFaNum', sans-serif;

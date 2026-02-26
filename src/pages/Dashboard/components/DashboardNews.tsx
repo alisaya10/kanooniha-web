@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import newsIcon from '@/assets/icons/news-icon.png'
-import notFoundNewsImage from '@/assets/images/not-found-news-image.png'
+import notFoundImage from '@/assets/images/not-found-news-image.png'
 import Button from '@/components/common/Button/Button'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import { useNewsList } from '@/queries/news/useNews'
@@ -55,11 +55,15 @@ const DashboardNews = () => {
             ))}
 
           {news.length === 0 && (
-            <div className="flex flex-col items-center space-y-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <img src={notFoundNewsImage} className="h-[155px] m-auto" alt="" />
-              <p className="font-bold lg:text-base text-sm">
-                خبری برای نمایش وجود ندارد.
-              </p>
+            <div
+              className={`flex flex-col items-center space-y-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+            >
+              <img
+                src={notFoundImage}
+                className="h-[155px]"
+                alt="not-found-news-image"
+              />
+              <p className="font-bold text-base">خبری برای نمایش وجود ندارد.</p>
             </div>
           )}
         </div>

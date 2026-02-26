@@ -60,7 +60,6 @@ const CustomJalaliCalendar = ({
     onMonthChange?.(fromDateGregorian, toDateGregorian)
   }
 
-
   return (
     <div className="  bg-boxGray rounded-xl p-4 w-full font-iransans">
       <div className="bg-white rounded-lg p-4">
@@ -117,6 +116,8 @@ const CustomJalaliCalendar = ({
 
             const count = eventData?.totalEventCount || 0
             const isSelected = selectedDate === gregorianDate
+            const isFriday = dayMoment.jDay() === 6
+            const isPast = dayMoment.isBefore(moment(), 'day')
 
             const isToday = moment().isSame(dayMoment, 'day')
 
@@ -127,23 +128,28 @@ const CustomJalaliCalendar = ({
                   onClick={() => onSelectDate(gregorianDate)}
                   className={`
                     border w-9 h-9 rounded-lg flex items-center justify-center cursor-pointer transition
-                    ${isSelected
-                      ? 'bg-blue-500 text-white border-0'
-                      : isToday
-                        ? 'bg-textBlue100 text-textBlue800 border-0'
-                        : 'border-gray-300'
-                    }
+                ${
+                  isSelected
+                    ? 'bg-blue-500 text-white border-0'
+                    : isToday
+                      ? 'bg-textBlue100 text-textBlue800 border-0'
+                      : isPast
+                        ? 'bg-boxGray border-textGray200'
+                        : isFriday
+                          ? 'border-red-500'
+                          : 'border-gray-300'
+                }
                   
               `}
                 >
                   {/* نمایش شمسی */}
                   <div
-                    className={`flex text-xs flex-col items-center justify-center font-bold ${isSelected ? 'text-white' : isSelected && isToday ? 'text-blue-600' : 'text-textGray700'}`}
+                    className={`flex text-xs flex-col items-center justify-center font-bold ${isSelected ? 'text-white' : isPast ? 'text-textGray500' : isToday ? 'text-textBlue800' : isFriday ? 'text-red-500' : 'text-textGray700'}`}
                   >
                     {dayMoment.format('jD')}
                     {
                       <span
-                        className={`text-[8px] ${isSelected ? 'text-white' : isSelected && isToday ? 'text-white ' : 'text-textGray700'} `}
+                        className={`text-[8px] ${isSelected ? 'text-white' : isPast ? 'text-textGray500' : isToday ? 'text-textBlue800' : isFriday ? 'text-red-500' : 'text-textGray700'} `}
                       >
                         {isToday ? 'امروز' : ''}
                       </span>

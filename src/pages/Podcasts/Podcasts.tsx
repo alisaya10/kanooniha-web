@@ -50,7 +50,7 @@ const Podcasts = () => {
       hasData={isLoadingItemList == false || podcastItems?.length == 0}
       hasDataTitle="پادکستی برای نمایش وجود ندارد."
     >
-      <div className="w-full mt-10 lg:px-6  px-3 ">
+      <div className="w-full mt-6 lg:px-6  px-3 ">
         {!isLoadingCategory ? (
           <SelectInput
             title={'موضوع پادکست خود را انتخاب کنید'}
