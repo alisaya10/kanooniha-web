@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import messageIcon from '@/assets/icons/message-icon.png'
+import notFoundImage from '@/assets/images/not-found-news-image.png'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import { useMessagesList } from '@/queries/messages/useMessages'
 import { PATHS } from '@/routes/paths'
@@ -60,8 +61,12 @@ const DashboardMessages = ({ showSeeAll }: { showSeeAll: boolean }) => {
           ))}
 
           {messages.length === 0 && (
-            <div className="flex flex-col items-center space-y-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <img src="images/not-found-image.png" className="h-[155px] m-auto" alt="" />
+            <div className="flex flex-col items-center gap-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <img
+                src={notFoundImage}
+                className="lg:h-[155px] h-[120px] block"
+                alt="not-found-image"
+              />
               <p className="font-bold lg:text-base text-sm">
                 پیامی برای نمایش وجود ندارد.
               </p>

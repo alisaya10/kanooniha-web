@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
-import Cookies from 'js-cookie'
 
 import Button from '@/components/common/Button/Button'
 import { useLogin } from '@/queries/auth/useLogin'
 import { PATHS } from '@/routes/paths'
+import { setAuthTokens } from '@/utils/authTokens'
 
 const ResetPasswordStep = () => {
   const navigate = useNavigate()
@@ -25,8 +25,7 @@ const ResetPasswordStep = () => {
         },
         onSuccess: (data) => {
           if (data?.tokenJwt && data?.success) {
-            Cookies.set('token', data.tokenJwt, { expires: 360, secure: true })
-            Cookies.set('logout', 'false')
+            setAuthTokens(data.tokenJwt, data.tokenRefresh)
             queryClient.invalidateQueries({ queryKey: ['userInfo'] })
             navigate(PATHS.Dashboard)
           } else {

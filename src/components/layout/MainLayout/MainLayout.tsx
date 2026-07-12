@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 
-// import Header from '../Header';
+import BottomTabNavigator from '../BottomTabNavigator/BottomTabNavigator'
 import Sidebar from '../Sidebar/Sidebar'
 
 const MainLayout = () => {
@@ -17,6 +17,7 @@ const MainLayout = () => {
         <div className="flex-4">
           <Outlet />
         </div>
+        <BottomTabNavigator />
       </div>
     </div>
   )

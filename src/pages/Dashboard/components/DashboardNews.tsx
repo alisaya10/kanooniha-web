@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 
 import newsIcon from '@/assets/icons/news-icon.png'
 import notFoundImage from '@/assets/images/not-found-news-image.png'
-import Button from '@/components/common/Button/Button'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import { useNewsList } from '@/queries/news/useNews'
 import { PATHS } from '@/routes/paths'
@@ -32,26 +31,26 @@ const DashboardNews = () => {
         <div className="space-y-4">
           {Array.isArray(news) &&
             news.map((prop, index) => (
-              <div
+              <Link
+                to={prop?.url}
+                target="_blank"
                 key={index}
                 className="flex flex-col border-b last:border-b-0 border-b-gray-300 space-y-2 pb-4"
               >
                 <div className="flex items-center">
                   <img
                     src={prop?.pictureUrl}
-                    className="w-12 h-12 rounded-full ml-3 object-cover"
+                    className="min-w-12 min-h-12 max-w-12 max-h-12 rounded-full ml-3 object-cover"
                     alt="news-image"
                   />
                   <p className="text-textGray700 text-sm font-bold">{prop?.title}</p>
                 </div>
                 <div className="flex justify-end">
-                  <Link to={prop?.url}>
-                    <Button className="px-3 py-1 text-xs font-demibold hover:bg-seeAllBlue hover:text-white transition-all">
-                      مشاهده خبر
-                    </Button>
-                  </Link>
+                  <span className="border border-seeAllBlue min-h-8 min-w-[85px] text-seeAllBlue rounded-lg flex items-center justify-center px-3 py-1 text-xs font-demibold hover:bg-seeAllBlue hover:text-white transition-all">
+                    مشاهده خبر
+                  </span>
                 </div>
-              </div>
+              </Link>
             ))}
 
           {news.length === 0 && (
@@ -60,10 +59,12 @@ const DashboardNews = () => {
             >
               <img
                 src={notFoundImage}
-                className="h-[155px]"
-                alt="not-found-news-image"
+                className="lg:h-[155px] h-[120]"
+                alt="not-found-image"
               />
-              <p className="font-bold text-base">خبری برای نمایش وجود ندارد.</p>
+              <p className="font-bold lg:text-base text-xs">
+                خبری برای نمایش وجود ندارد.
+              </p>
             </div>
           )}
         </div>

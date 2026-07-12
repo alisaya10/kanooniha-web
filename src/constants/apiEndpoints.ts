@@ -4,7 +4,22 @@ export const API_ENDPOINTS = {
   // Authentication
   AUTH: {
     LOGIN: '/Account/UserLogin',
+    USER_LOGIN_REFRESH: '/Account/UserLoginRefresh',
     USER_INFO: '/Account/UserInfo',
+    BOOK_FAIR_SIGNUP: '/Account/MemberLogin',
+    BOOK_FAIR_MEMBER_VERIFY: '/Account/MemberVerify',
+  },
+
+  BOOK_FAIR: {
+    SUBMIT_PROFILE: '/BookFair/SubmitProfile',
+    GET_PROFILE_DATA: '/BookFair/GetProfileData',
+    CITY_LIST: (stateCode: number | string) =>
+      `/BookFair/cityList?stateCode=${stateCode}`,
+    GET_QUESTION_LIST: '/BookFair/GetQuestionList',
+    SUBMIT_ANSWER: '/BookFair/SubmitAnswer',
+    GET_MEMBER_GIFT: '/BookFair/GetMemberGift',
+    GET_INVITATION_CODE: '/BookFair/GetInvitationCode',
+    GET_STUDENT_GIFT: '/BookFair/GetStudentGift',
   },
 
   // News
@@ -39,6 +54,8 @@ export const API_ENDPOINTS = {
     TICKET_RECEIVER_KIND_LIST: '/Support/TicketReceiverKindList',
     TICKET_INSERT: '/Support/TicketInsert',
     TICKET_MESSAGE_INSERT: '/Support/TicketMessageAppInsert',
+    GET_INSPECTOR_INFO: (officeCode: number, areaCode: number) =>
+      `/Support/GetInspetorInfo?officeCode=${officeCode}&areaCode=${areaCode}`,
   },
 
   // Polls
@@ -68,6 +85,15 @@ export const API_ENDPOINTS = {
   // App
   APP: {
     VERSION_CHECK: '/App/VersionCheck',
+  },
+
+  DOWNLOAD: {
+    CONTENT_APP_ITEM: (type: number | string) => `/Download/ContentAppItem?type=${type}`,
+  },
+
+  // App Promotion
+  APP_PROMOTION: {
+    LIST: '/AppPromotion/AppList',
   },
 }
 

@@ -57,7 +57,7 @@ const EarlyReportCard = () => {
   }
 
   return (
-    <PageLayout title="کارنامه زودهنگام" backLink={PATHS.Dashboard} hasData={true}>
+    <PageLayout title="کارنامه زودهنگام" backLink={PATHS.Dashboard} hasData={1}>
       <HtmlTableViewer htmlContent={htmlContent} />
     </PageLayout>
   )

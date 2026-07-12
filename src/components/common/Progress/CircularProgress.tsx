@@ -1,4 +1,4 @@
-const CircularProgress = ({ value, max = 100 }) => {
+const CircularProgress = ({ value, max = 100 }: { value: number; max: number }) => {
   const radius = 47
   const strokeWidth = 5
   const circumference = 2 * Math.PI * radius

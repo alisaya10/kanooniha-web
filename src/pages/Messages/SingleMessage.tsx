@@ -1,9 +1,8 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 import Button from '@/components/common/Button/Button'
 import PageLayout from '@/components/layout/PageLayout/PageLayout'
-// import { handleLinkClick } from "@/utils/externalLinkHandler";
 import { useVisitMessage } from '@/queries/messages/useVisitMessage'
 import { PATHS } from '@/routes/paths'
 
@@ -19,7 +18,13 @@ const SingleMessage = () => {
   }, [message?.id, visitMessage])
 
   return (
-    <PageLayout title="جزییات پیام" backLink={PATHS.Dashboard} hasData={message?.id} hasDataTitle="پیامی برای نمایش وجود ندارد." minHeight={0}>
+    <PageLayout
+      title="جزییات پیام"
+      backLink={PATHS.Dashboard}
+      hasData={message?.id}
+      hasDataTitle="پیامی برای نمایش وجود ندارد."
+      minHeight={0}
+    >
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <p className="lg:text-base text-sm font-bold">{message?.title}</p>
@@ -29,24 +34,18 @@ const SingleMessage = () => {
         <p className="lg:text-base text-sm leading-6">{message?.message}</p>
 
         {message.filePath && (
-          <Button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault()
-              // handleLinkClick(e as any, message?.filePath);
-            }}
-          >
-            <span className="cursor-pointer">مشاهده فایل پیوست</span>
+          <Button>
+            <Link target="_blank" to={message?.filePath}>
+              <span className="cursor-pointer">مشاهده فایل پیوست</span>
+            </Link>
           </Button>
         )}
 
         {message?.link && (
-          <Button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              e.preventDefault()
-              // handleLinkClick(e as any, message?.link);
-            }}
-          >
-            <span className="cursor-pointer">{message?.linkTitle}</span>
+          <Button>
+            <Link target="_blank" to={message?.link}>
+              <span className="cursor-pointer">{message?.linkTitle}</span>
+            </Link>
           </Button>
         )}
       </div>

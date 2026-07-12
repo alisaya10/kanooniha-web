@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SpinLoading } from 'respinner'
 
 import newsIcon from '@/assets/icons/news-icon.png'
-import notFoundNewsImage from '@/assets/images/not-found-news-image.png'
 import Button from '@/components/common/Button/Button'
-import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import SelectInput from '@/components/common/Input/SelectInput'
 import PageLayout from '@/components/layout/PageLayout/PageLayout'
 import { usePodcastCategories } from '@/queries/podcasts/usePodcastCategories'
@@ -35,10 +32,11 @@ const Podcasts = () => {
 
   const podcastItems = itemListData?.pages.flat() ?? []
   const error = errorCategory || errorItemList
+  const isLoading = isLoadingItemList || isLoadingCategory
 
   const handleTryAgain = () => {
-    if (errorCategory) refetchCategories()
-    else refetchItems()
+    refetchCategories()
+    refetchItems()
   }
 
   return (
@@ -47,11 +45,14 @@ const Podcasts = () => {
       backLink={PATHS.Dashboard}
       minHeight={0}
       grayParent={false}
-      hasData={isLoadingItemList == false || podcastItems?.length == 0}
+      error={error}
+      hasData={podcastItems?.length}
       hasDataTitle="پادکستی برای نمایش وجود ندارد."
+      tryagain={handleTryAgain}
+      isLoading={isLoading}
     >
-      <div className="w-full mt-6 lg:px-6  px-3 ">
-        {!isLoadingCategory ? (
+      <div className="w-full mt-6 lg:px-6 px-3">
+        {podcastItems.length != 0 && (
           <SelectInput
             title={'موضوع پادکست خود را انتخاب کنید'}
             errorMessage={''}
@@ -61,18 +62,6 @@ const Podcasts = () => {
             }}
             className="w-full h-[48px] outline-none border z-40 rounded-[5px] text-base font-medium text-gray-500"
           />
-        ) : (
-          <div className="flex items-center justify-center">
-            <SpinLoading
-              duration={0.8}
-              fill="#185390"
-              borderRadius={2}
-              count={9}
-              barHeight={5}
-              barWidth={2}
-              size={20}
-            />
-          </div>
         )}
       </div>
 
@@ -88,18 +77,16 @@ const Podcasts = () => {
           </div>
         </div>
 
-        <LoaderTryAgainButton
-          onClick={handleTryAgain}
-          error={error}
-          isLoading={isLoadingItemList}
-        />
-
         <div className="divide-y divide-gray-300">
           {Array.isArray(podcastItems) &&
+            !error &&
             podcastItems.map((prop, index) => (
               <div
+                onClick={() =>
+                  navigate(PATHS.SINGLE_PODCAST, { state: { message: prop } })
+                }
                 key={index}
-                className="flex lg:flex-row flex-col lg:space-y-0 space-y-3 lg:items-center justify-between py-4"
+                className="flex lg:flex-row flex-col lg:space-y-0 space-y-3 lg:items-center justify-between py-4 cursor-pointer"
               >
                 <div className="flex flex-col items-start w-[80%]">
                   <p className="font-bold text-sm text-textGray700">{prop?.fileName}</p>
@@ -123,16 +110,9 @@ const Podcasts = () => {
               </div>
             ))}
         </div>
-
-        {/* {podcastItems?.length == 0 && (
-          <div className="flex flex-col items-center space-y-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <img src={notFoundNewsImage} className="h-[155px] m-auto" alt="" />
-            <p className="font-bold text-base">پادکستی برای نمایش وجود ندارد.</p>
-          </div>
-        )} */}
       </div>
 
-      {hasNextPage && podcastItems.length > 0 && (
+      {hasNextPage && podcastItems.length > 0 && !error && (
         <div className="flex flex-col items-center">
           <Button
             onClick={() => fetchNextPage()}

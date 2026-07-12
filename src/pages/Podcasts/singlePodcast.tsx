@@ -17,7 +17,13 @@ const SinglePodcast = () => {
   }, [message?.id, incrementVisit])
 
   return (
-    <PageLayout title="جزییات پادکست" backLink={PATHS.Dashboard} minHeight={0}>
+    <PageLayout
+      title="جزییات پادکست"
+      backLink={PATHS.Dashboard}
+      minHeight={0}
+      isLoading={false}
+      hasData={1}
+    >
       <div className="flex flex-col items-start">
         <p className="font-iransans lg:text-base text-sm font-bold">
           {message?.fileName}

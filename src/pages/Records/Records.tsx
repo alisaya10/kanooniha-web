@@ -6,7 +6,6 @@ import recordOneIcon from '@/assets/icons/record-one-icon.png'
 import recordThreeIcon from '@/assets/icons/record-three-icon.png'
 import recordTwoIcon from '@/assets/icons/record-two-icon.png'
 import Button from '@/components/common/Button/Button'
-import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import PageLayout from '@/components/layout/PageLayout/PageLayout'
 import { useDownloadWorkBook } from '@/queries/records/useDownloadWorkBook'
 import { useWorkBookKinds } from '@/queries/records/useWorkBookKinds'
@@ -17,6 +16,7 @@ type DownloadResult = { download?: string; status?: string }
 const Record = () => {
   const navigate = useNavigate()
   const { data: recordsType = [], isLoading, isError, refetch } = useWorkBookKinds()
+
   const downloadMutation = useDownloadWorkBook()
   const [downloadResults, setDownloadResults] = useState<Record<string, DownloadResult>>(
     {},
@@ -52,17 +52,14 @@ const Record = () => {
   return (
     <PageLayout
       title="کارنامه"
-      backLink={PATHS.Dashboard}
-      minHeight={recordsType.length ? 0 : 500}
+      minHeight={recordsType.length <= 0 ? 500 : 0}
       hasData={recordsType.length}
       hasDataTitle="کارنامه ای برای نمایش وجود ندارد."
+      tryagain={() => refetch()}
+      isLoading={isLoading}
+      error={isError}
+      hasDataPosition={'center'}
     >
-      <LoaderTryAgainButton
-        onClick={() => refetch()}
-        error={isError}
-        isLoading={isLoading}
-      />
-
       {!isLoading && (
         <div className="flex lg:flex-row flex-col items-center justify-center lg:grid lg:grid-cols-3">
           {Array.isArray(recordsType) &&

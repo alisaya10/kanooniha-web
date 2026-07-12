@@ -15,7 +15,7 @@ const TextArea = ({
   ...rest
 }: TextAreaProps) => {
   return (
-    <div>
+    <div className="w-full flex flex-col">
       <textarea
         value={value}
         onChange={onChange}

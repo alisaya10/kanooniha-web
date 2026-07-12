@@ -8,6 +8,7 @@ export function useTicketReceiverKindList() {
   return useQuery({
     queryKey: ['receiverKindList'],
     queryFn: fetchTicketReceiverKindList,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
+    gcTime: 0,
   })
 }

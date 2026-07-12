@@ -1,7 +1,7 @@
-import { forwardRef, ReactNode, useEffect, useImperativeHandle, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 
 interface ModalProps {
-  children: ReactNode
+  children: React.ReactNode
   required?: boolean
 }
 
@@ -60,7 +60,7 @@ const Modal = forwardRef(({ children, required = false }: ModalProps, ref) => {
   return (
     isVisible && (
       <div
-        className="fixed z-50 top-0 inset-0 flex items-center justify-center bg-black/70"
+        className="fixed z-45 top-0 inset-0 flex items-center justify-center bg-black/70"
         onClick={hideModal}
       >
         {children}

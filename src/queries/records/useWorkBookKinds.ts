@@ -8,6 +8,6 @@ export function useWorkBookKinds() {
   return useQuery({
     queryKey: ['workBookKinds'],
     queryFn: fetchWorkBookKinds,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 0,
   })
 }

@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
 
 import eyeClosedIcon from '@/assets/icons/eye-closed-icon.png'
 import eyeOpenIcon from '@/assets/icons/eye-open-icon.png'
@@ -8,6 +7,7 @@ import kanoonLogo from '@/assets/images/kanoon-logo-image.png'
 import Button from '@/components/common/Button/Button'
 import { useLogin } from '@/queries/auth/useLogin'
 import { PATHS } from '@/routes/paths'
+import { setAuthTokens } from '@/utils/authTokens'
 
 const LoginPasswordStep = () => {
   const [password, setPassword] = useState('')
@@ -45,9 +45,8 @@ const LoginPasswordStep = () => {
       onSuccess: (data) => {
         setMessage(data?.message ?? '')
         if (data?.tokenJwt && data?.success) {
-          Cookies.set('token', data.tokenJwt, { expires: 360, secure: true })
+          setAuthTokens(data.tokenJwt, data.tokenRefresh)
           navigate(PATHS.Dashboard)
-          Cookies.set('logout', 'false')
         }
       },
     })

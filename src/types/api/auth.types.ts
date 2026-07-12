@@ -27,3 +27,70 @@ export type LoginResponse = {
   tokenJwt: string | null
   tokenRefresh: string | null
 }
+
+export type TokenDto = {
+  token: string
+  refreshToken: string
+}
+
+export type BookFairSignupParams = {
+  mobile: string
+}
+
+export type BookFairSignupResponse = {
+  success: boolean
+  message: string | null
+  tokenJwt: string
+  tokenRefresh: string | null
+  state: number
+  status: number
+}
+
+export type MemberVerifyParams = {
+  mobile: string
+  activeCode: string
+}
+
+export type MemberVerifyResponse = {
+  success: boolean
+  message: string | null
+  data: string | null
+  status: number
+}
+
+export type BookFairSubmitProfileParams = {
+  firstName: string
+  lastName: string
+  stateCode: number
+  gender: number | null
+  cityCode: number
+  groupCode: number
+  inviteCode: string | null
+}
+
+export type BookFairSubmitProfileResponse = {
+  success: boolean
+  message: string | null
+  tokenJwt: string | null
+  tokenRefresh: string | null
+}
+
+export type BookFairProfileSelectItem = {
+  text: string
+  value: string
+  selected: boolean
+}
+
+export type BookFairProfileFormData = {
+  groupList: BookFairProfileSelectItem[]
+  stateList: BookFairProfileSelectItem[]
+  cityList?: BookFairProfileSelectItem[]
+  genderList?: BookFairProfileSelectItem[]
+}
+
+export type BookFairProfileDataResponse = {
+  data: BookFairProfileFormData
+  message: string | null
+  success: boolean
+  status: number
+}

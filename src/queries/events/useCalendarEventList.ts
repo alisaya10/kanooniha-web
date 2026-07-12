@@ -12,6 +12,6 @@ export function useCalendarEventList(params: CalendarEventListParams) {
     queryKey: ['calendarList', params.FromDate, params.ToDate],
     queryFn: () => fetchCalendarEventList(params),
     enabled,
-    staleTime: 2 * 60 * 1000,
+    staleTime: 0,
   })
 }

@@ -1,27 +1,29 @@
-import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import supportIcon from '@/assets/icons/support-icon.png'
-import notFoundImage from '@/assets/images/not-found-image.png'
+import notFoundImage from '@/assets/images/not-found-news-image.png'
 import Button from '@/components/common/Button/Button'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
-import { useTicketAppList } from '@/queries/support/useTicketAppList'
 import { PATHS } from '@/routes/paths'
 import { toJalaliFarsi } from '@/utils/date'
 
-const RequestSupportMessages = () => {
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useTicketAppList()
-
-  const requestSupport = useMemo(() => data?.pages.flat() ?? [], [data?.pages])
-
+const RequestSupportMessages = ({
+  data,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  isLoading = false,
+  isError = false,
+  tryagain,
+}: {
+  data: any
+  fetchNextPage: any
+  hasNextPage: boolean
+  isFetchingNextPage: boolean
+  isLoading?: boolean
+  isError?: boolean
+  tryagain?: () => void
+}) => {
   return (
     <div className="lg:mx-0 mx-3">
       <div className="bg-boxGray py-6 px-4 rounded-xl relative min-h-[500px]">
@@ -37,17 +39,12 @@ const RequestSupportMessages = () => {
           </div>
         </div>
 
-        {/* لودر و ارور */}
-        <LoaderTryAgainButton
-          onClick={() => refetch()}
-          error={isError}
-          isLoading={isLoading}
-        />
+        <LoaderTryAgainButton onClick={tryagain} error={isError} isLoading={isLoading} />
 
         {/* لیست پیام‌ها */}
         {!isLoading && !isError && (
           <div className="space-y-4">
-            {requestSupport.map((prop, index) => (
+            {data.map((prop: any, index: number) => (
               <Link
                 to={PATHS.SUPPORT_DETAIL}
                 state={{ message: prop }}
@@ -65,10 +62,15 @@ const RequestSupportMessages = () => {
                 <p className="text-sm text-textGray700 leading-6">
                   {prop?.receiverKindName}
                 </p>
-                <p className="text-sm text-textGray700 leading-6">{prop?.lastMessage}</p>
+                <p className="text-sm text-textGray700 leading-6">
+                  {prop?.lastMessage.length > 30
+                    ? prop?.lastMessage.substring(0, 30) + '...'
+                    : prop?.lastMessage}
+                </p>
                 <div className="flex justify-end w-full">
                   {prop?.ticketStatus == 0 ? (
                     <Button
+                      hoverEffect={false}
                       onClick={() => {}}
                       className="bg-yellow-200 w-full lg:w-auto text-yellow-800 h-[34px] min-w-[100px] text-xs font-bold border-0"
                     >
@@ -76,6 +78,7 @@ const RequestSupportMessages = () => {
                     </Button>
                   ) : prop?.ticketStatus == 1 ? (
                     <Button
+                      hoverEffect={false}
                       onClick={() => {}}
                       className="bg-textGray300 w-full lg:w-auto text-textGray700 h-[34px] min-w-[100px] text-xs font-bold border-0"
                     >
@@ -83,6 +86,7 @@ const RequestSupportMessages = () => {
                     </Button>
                   ) : prop?.ticketStatus == 2 ? (
                     <Button
+                      hoverEffect={false}
                       onClick={() => {}}
                       className="bg-textBlue200 w-full lg:w-auto text-seeAllBlue h-[34px] min-w-[100px] text-xs font-bold border-0"
                     >
@@ -90,6 +94,7 @@ const RequestSupportMessages = () => {
                     </Button>
                   ) : prop?.ticketStatus == 3 ? (
                     <Button
+                      hoverEffect={false}
                       onClick={() => {}}
                       className="bg-textGreen300 w-full lg:w-auto text-textGreen700 h-[34px] min-w-[100px] text-xs font-bold border-0"
                     >
@@ -102,12 +107,15 @@ const RequestSupportMessages = () => {
               </Link>
             ))}
 
-            {/* نمایش پیام خالی */}
-            {requestSupport.length === 0 && (
-              <div className="flex flex-col items-center space-y-6 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <img src={notFoundImage} className="h-[155px] m-auto" alt="" />
-                <p className="font-bold lg:text-base text-sm">
-                  درخواست پشتیبانی برای نمایش وجود ندارد.
+            {data.length === 0 && (
+              <div className="flex flex-col items-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <img
+                  src={notFoundImage}
+                  className="lg:h-[155px] h-[120px] m-auto"
+                  alt="not-found-image"
+                />
+                <p className="font-bold lg:text-base text-sm text-center leading-6 mt-6">
+                  درخواستی برای نمایش یافت نشد.
                 </p>
               </div>
             )}
@@ -115,7 +123,7 @@ const RequestSupportMessages = () => {
         )}
       </div>
 
-      {hasNextPage && requestSupport.length > 0 && (
+      {hasNextPage && data.length > 0 && (
         <div className="flex flex-col items-center ">
           <Button
             onClick={() => fetchNextPage()}

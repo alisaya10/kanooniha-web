@@ -12,6 +12,6 @@ export function useActiveEventCount() {
   return useQuery({
     queryKey: ['events', 'activeCount'],
     queryFn: fetchActiveEventCount,
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 0, // 2 minutes
   })
 }

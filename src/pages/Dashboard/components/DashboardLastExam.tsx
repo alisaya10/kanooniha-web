@@ -15,7 +15,7 @@ const DashboardLastExam = () => {
         error={isError}
         isLoading={isLoading}
       />
-      {!isLoading && data && (
+      {!isLoading && data && !isError && (
         <>
           <div className="flex items-center border-b border-b-textGreen300 pb-4">
             <img src={clipboardIcon} className="w-7 h-7 mr-[6px]" alt="" />

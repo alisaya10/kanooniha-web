@@ -2,8 +2,6 @@ import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import fileIcon from '@/assets/icons/file-icon.png'
-import notFoundImage from '@/assets/images/not-found-image.png'
-import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import PageLayout from '@/components/layout/PageLayout/PageLayout'
 import { useMessagesList } from '@/queries/messages/useMessages'
 import { PATHS } from '@/routes/paths'
@@ -29,13 +27,10 @@ const MessageFile = () => {
       grayParent={true}
       hasData={messages.length}
       hasDataTitle="فایلی برای نمایش وجود ندارد."
+      tryagain={() => getMessages()}
+      isLoading={isLoading}
+      error={error}
     >
-      <LoaderTryAgainButton
-        onClick={() => getMessages()}
-        error={error}
-        isLoading={isLoading}
-      />
-
       <div className="border-b border-b-gray-300 pb-4 mb-4">
         <div className="flex items-center gap-2">
           <img src={fileIcon} className="filter grayscale brightness-75 w-5 h-5" alt="" />

@@ -8,6 +8,7 @@ export function useMessagesList() {
   return useQuery({
     queryKey: ['messagesList'],
     queryFn: fetchMessagesList,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 0,
+    gcTime: 0,
   })
 }

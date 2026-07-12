@@ -8,6 +8,8 @@ import App from './App.tsx'
 import './styles/fonts.css'
 import './styles/globals.css'
 
+// import 'swiper/swiper-bundle.min.css';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

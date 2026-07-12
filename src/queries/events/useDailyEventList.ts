@@ -9,6 +9,6 @@ export function useDailyEventList(date: string) {
     queryKey: ['dailyList', date],
     queryFn: () => fetchDailyEventList(date),
     enabled: Boolean(date),
-    staleTime: 2 * 60 * 1000,
+    staleTime: 0,
   })
 }

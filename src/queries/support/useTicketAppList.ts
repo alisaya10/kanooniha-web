@@ -10,12 +10,13 @@ export function useTicketAppList() {
   return useInfiniteQuery({
     queryKey: ['ticketAppList'],
     queryFn: ({ pageParam }) =>
-      fetchTicketAppList({ pageIndex: pageParam, pageSize: PAGE_SIZE }),
+      fetchTicketAppList({ pageIndex: pageParam as number, pageSize: PAGE_SIZE }),
     initialPageParam: 1,
-    getNextPageParam: (_lastPage, allPages) => {
-      if (_lastPage.length < PAGE_SIZE) return undefined
+    getNextPageParam: (lastPage, allPages) => {
+      if (!lastPage?.length || lastPage.length < PAGE_SIZE) return undefined
       return allPages.length + 1
     },
-    staleTime: 2 * 60 * 1000,
+    staleTime: 0,
+    gcTime: 0,
   })
 }

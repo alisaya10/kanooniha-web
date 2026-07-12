@@ -1,6 +1,4 @@
 import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
 
 import exitIcon from '@/assets/icons/exit-icon.png'
 import borderImage from '@/assets/images/border-image.png'
@@ -10,18 +8,14 @@ import Button from '@/components/common/Button/Button'
 import LoaderTryAgainButton from '@/components/common/Button/LoaderTryAgainButton'
 import Modal from '@/components/common/Modal/Modal'
 import { useUserInfo } from '@/queries/auth/useUserInfo'
-import { PATHS } from '@/routes/paths'
+import { logoutUser } from '@/utils/logoutUser'
 
 const Profile = () => {
   const exitModal = useRef<any>(null)
-  const navigate = useNavigate()
   const { data, isLoading, isError, refetch } = useUserInfo()
 
   const exitUser = () => {
-    localStorage.clear()
-    Cookies.remove('token')
-    Cookies.set('logout', 'true')
-    navigate(PATHS.LOGIN_NATIONAL_CODE)
+    logoutUser()
   }
 
   return (

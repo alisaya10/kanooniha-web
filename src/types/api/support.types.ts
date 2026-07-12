@@ -50,3 +50,17 @@ export type TicketMessageInsertParams = {
   ticketId: number
   message: string
 }
+
+export type InspectorInfo = {
+  officeCode: number
+  areaCode: number
+  fullName: string
+  vocation: string
+  course: string
+  managerName: string
+}
+
+export type InspectorInfoParams = {
+  officeCode: number
+  areaCode: number
+}

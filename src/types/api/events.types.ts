@@ -16,11 +16,12 @@ export type DailyEventItem = {
   createDate: string
   description: string
   eventDate: string
-  expiryDate: string | null
+  expiryDate: string
   groupCodes: string
   name: string
   officeCode: number | null
-  roomId: number
+  roomId: number | null
   updateDate: string
   url: string | null
+  presenterName: string
 }

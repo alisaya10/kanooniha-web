@@ -1,7 +1,21 @@
 export type { VersionCheckResponse } from './app.types'
-export type { UserInfo, LoginParams, LoginResponse } from './auth.types'
+export type {
+  UserInfo,
+  LoginParams,
+  LoginResponse,
+  BookFairSignupParams,
+  BookFairSignupResponse,
+  MemberVerifyParams,
+  MemberVerifyResponse,
+  BookFairSubmitProfileParams,
+  BookFairSubmitProfileResponse,
+  BookFairProfileSelectItem,
+  BookFairProfileFormData,
+  BookFairProfileDataResponse,
+} from './auth.types'
 export type { MessageListItem } from './messages.types'
 export type { NewsItem } from './news.types'
+export type { AppPromotionItem, AppPromotionListResponse } from './appPromotion.types'
 export type { PodcastCategory, PodcastItem } from './podcasts.types'
 export type {
   WorkBookKind,
@@ -23,6 +37,8 @@ export type {
   TicketInsertParams,
   TicketMessageItem,
   TicketMessageInsertParams,
+  InspectorInfo,
+  InspectorInfoParams,
 } from './support.types'
 export type {
   PollListItem,
@@ -30,3 +46,11 @@ export type {
   PollSetParams,
   PollSetResponse,
 } from './polls.types'
+export type {
+  GetQuestionListResponse,
+  SubmitAnswerParams,
+  SubmitAnswerResponse,
+  GetMemberGiftResponse,
+  GetInvitationGiftResponse,
+  GetStudentGiftResponse,
+} from './bookfair.types'

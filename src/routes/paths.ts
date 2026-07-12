@@ -4,18 +4,26 @@ export const PATHS = {
   LOGIN_PASSWORD: '/password',
   LOGIN_RESET_PASSWORD: '/reset-password',
 
+  //Auth
+  SIGNUP_BOOK_FAIR: '/book-fair-signup',
+  SIGNUP_BOOK_FAIR_CODE: '/book-fair-signup-code',
+  SIGNUP_BOOK_FAIR_INFO: '/book-fair-signup-info',
+  SIGNUP_BOOK_FAIR_SLIDER: '/book-fair-slider',
+
   // Main pages
   Dashboard: '/',
   NEWS: '/news',
   PODCASTS: '/podcasts',
+  VIDEOS: '/videos',
+  SINGLE_VIDEO: '/single-video',
   POLL: '/poll',
-  POLLS: '/polls',
   EARLY_REPORT_CARD: '/early-report-card',
   SINGLE_PODCAST: '/single-podcast',
   PROFILE: '/profile',
   RECORDS: '/records',
   MAIN_RECORDS: '/main-records',
   EVENTS: '/events',
+  GIFT: '/gift',
 
   // Support
   SUPPORT: '/support',

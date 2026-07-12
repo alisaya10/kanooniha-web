@@ -28,7 +28,7 @@ const Input = ({
         placeholder={placeholder}
         {...rest}
       />
-      <p className="text-redText mt-2 text-sm">{errorMessage}</p>
+      {errorMessage && <p className="text-redText mt-2 text-sm">{errorMessage}</p>}
     </div>
   )
 }

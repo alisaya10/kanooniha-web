@@ -122,7 +122,7 @@ const CustomJalaliCalendar = ({
             const isToday = moment().isSame(dayMoment, 'day')
 
             return (
-              <div className="flex flex-col items-center justify-center">
+              <div key={i} className="flex flex-col items-center justify-center">
                 <div
                   key={i}
                   onClick={() => onSelectDate(gregorianDate)}

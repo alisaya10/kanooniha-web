@@ -1,7 +1,16 @@
 export { fetchVersionCheck } from './app'
-export { fetchUserInfo, login } from './auth'
+export {
+  fetchUserInfo,
+  login,
+  bookFairSignup,
+  memberVerify,
+  bookFairSubmitProfile,
+  fetchBookFairProfileData,
+  fetchBookFairCityList,
+} from './auth'
 export { fetchMessagesList, visitMessage } from './messages'
 export { fetchNewsList } from './news'
+export { fetchAppPromotionList } from './appPromotion'
 export {
   fetchPodcastCategories,
   fetchPodcastItemList,
@@ -19,6 +28,7 @@ export {
   fetchDailyEventList,
   fetchActiveEventCount,
 } from './events'
+export { fetchContentAppItem } from './strategicPlanOrTextBook'
 export {
   fetchTicketRequestKinds,
   fetchTicketReceiverKindList,
@@ -54,4 +64,14 @@ export type {
   PollQuestion,
   PollSetParams,
   PollSetResponse,
+  BookFairSignupParams,
+  BookFairSignupResponse,
+  MemberVerifyParams,
+  MemberVerifyResponse,
+  BookFairSubmitProfileParams,
+  BookFairSubmitProfileResponse,
+  BookFairProfileSelectItem,
+  BookFairProfileDataResponse,
+  AppPromotionItem,
+  AppPromotionListResponse,
 } from '@/types/api'

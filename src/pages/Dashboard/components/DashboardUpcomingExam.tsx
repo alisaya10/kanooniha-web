@@ -20,7 +20,7 @@ const DashboardUpcomingExam = () => {
 
   return (
     <div
-      className={` ${data && Object.keys(data).length !== 0 ? 'bg-textBlue50 lg:block' : 'bg-white hidden'}  pt-6 ${isLoading ? 'pb-6' : 'pb-9'} px-4 rounded-xl space-y-4 min-h-[200px] relative`}
+      className={` ${data && Object.keys(data).length !== 0 ? 'bg-textBlue50 lg:block' : 'bg-white hidden'}  pt-6 ${isLoading ? 'pb-6' : 'pb-6'} px-4 rounded-xl space-y-4 min-h-[200px] relative`}
     >
       <LoaderTryAgainButton
         onClick={() => refetch()}
@@ -28,10 +28,10 @@ const DashboardUpcomingExam = () => {
         isLoading={isLoading}
       />
 
-      {!isLoading && data && Object.keys(data).length !== 0 && (
+      {!isLoading && data && Object.keys(data).length !== 0 && !isError && (
         <>
-          <div className="flex items-center border-b border-textBlue200 pb-4 ">
-            <img src={documentIcon} className="w-5 h-5 mr-[6px]" alt="" />
+          <div className="flex items-center border-b border-textBlue200 pb-4">
+            <img src={documentIcon} className="w-5 h-5 mr-[6px]" alt="document-icon" />
             <p className="text-textGray900 lg:text-base text-sm font-bold mr-2">
               {data?.title}
             </p>
@@ -56,8 +56,8 @@ const DashboardUpcomingExam = () => {
             </div>
             <img
               src={backpackImage}
-              className="w-[89px] h-[84.54px] mx-[17.5px] "
-              alt=""
+              className="w-[89px] h-[84.54px] mx-[17.5px]"
+              alt="backpack-image"
             />
           </div>
         </>

@@ -3,9 +3,11 @@ import { SpinLoading } from 'respinner'
 interface ButtonProps {
   children: React.ReactNode
   className?: string
+  style?: React.CSSProperties
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   imageSrc?: string
   imageAlt?: string
+  hoverEffect?: boolean
   isLoading?: boolean
   disabled?: boolean
 }
@@ -13,9 +15,11 @@ interface ButtonProps {
 const Button = ({
   children,
   className = '',
+  style,
   onClick,
   imageSrc,
   imageAlt = 'button icon',
+  hoverEffect = true,
   isLoading = false,
   disabled = false,
 }: ButtonProps) => {
@@ -23,7 +27,10 @@ const Button = ({
     <button
       onClick={onClick}
       disabled={disabled || isLoading}
-      className={`border group border-seeAllBlue min-h-8 min-w-[85px] cursor-pointer text-seeAllBlue rounded-lg flex items-center justify-center gap-2 px-3 hover:bg-seeAllBlue hover:text-white transition ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
+      style={style}
+      className={`border group border-seeAllBlue min-h-8 min-w-[85px] cursor-pointer text-seeAllBlue rounded-lg flex items-center justify-center gap-2 px-3 transition ${
+        hoverEffect ? 'hover:bg-seeAllBlue hover:text-white' : ''
+      } ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
     >
       {isLoading ? (
         <SpinLoading

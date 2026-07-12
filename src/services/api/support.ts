@@ -1,5 +1,7 @@
 import { API_ENDPOINTS } from '@/constants/apiEndpoints'
 import type {
+  InspectorInfo,
+  InspectorInfoParams,
   TicketAppItem,
   TicketInsertParams,
   TicketMessageInsertParams,
@@ -31,16 +33,16 @@ export type TicketAppListParams = {
 export async function fetchTicketAppList(
   params: TicketAppListParams,
 ): Promise<TicketAppItem[]> {
-  const { data } = await apiClient.get<TicketAppItem[]>(
+  const { data } = await apiClient.get<TicketAppItem[] | null>(
     API_ENDPOINTS.SUPPORT.TICKET_APP_LIST,
     {
-      params: {
-        pageIndex: params.pageIndex.toString(),
-        pageSize: params.pageSize.toString(),
+      headers: {
+        PageIndex: params.pageIndex.toString(),
+        PageSize: params.pageSize.toString(),
       },
     },
   )
-  return data
+  return data ?? []
 }
 
 export async function fetchTicketMessageList(
@@ -66,6 +68,15 @@ export async function ticketInsert(params: TicketInsertParams): Promise<number> 
   const { data } = await apiClient.post<number>(
     API_ENDPOINTS.SUPPORT.TICKET_INSERT,
     params,
+  )
+  return data
+}
+
+export async function fetchInspectorInfo(
+  params: InspectorInfoParams,
+): Promise<InspectorInfo> {
+  const { data } = await apiClient.get<InspectorInfo>(
+    API_ENDPOINTS.SUPPORT.GET_INSPECTOR_INFO(params.officeCode, params.areaCode),
   )
   return data
 }

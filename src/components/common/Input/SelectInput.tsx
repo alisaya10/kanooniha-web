@@ -14,7 +14,7 @@ const CustomDropdown = ({
   keyfilter = 'id',
 }: {
   className?: string
-  options?: SelectOption[]
+  options?: SelectOption[] | any
   errorMessage?: string
   onChange: (value: unknown) => void
   title?: string
@@ -26,7 +26,7 @@ const CustomDropdown = ({
   const [selectedOption, setSelectedOption] = useState(title)
 
   return (
-    <>
+    <div className="w-full">
       <div
         className={`${className}  ${errorMessage != '' ? 'border-redText' : 'border-textGray500'} relative`}
       >
@@ -43,7 +43,7 @@ const CustomDropdown = ({
         </button>
 
         {isOpen && (
-          <ul className="absolute w-full left-0 top-14 border border-gray-700  bg-white rounded-md shadow-lg">
+          <ul className="absolute z-100 w-full left-0 top-14 max-h-44 overflow-y-auto overflow-x-hidden border border-gray-700 bg-white rounded-md shadow-lg overscroll-contain">
             {Array.isArray(options) &&
               options.map((option, index) => (
                 <li
@@ -55,7 +55,7 @@ const CustomDropdown = ({
 
                     onChange(option[keyfilter])
                   }}
-                  className="px-4 py-2  hover:bg-gray-200 cursor-pointer"
+                  className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
                 >
                   {option[keyName]}
                 </li>
@@ -63,8 +63,8 @@ const CustomDropdown = ({
           </ul>
         )}
       </div>
-      <p className="text-redText mt-2 text-sm">{errorMessage}</p>
-    </>
+      {errorMessage && <p className="text-redText mt-2 text-sm">{errorMessage}</p>}
+    </div>
   )
 }
 

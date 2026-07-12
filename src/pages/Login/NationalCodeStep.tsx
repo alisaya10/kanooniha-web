@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import kanoonLogo from '@/assets/images/kanoon-logo-image.png'
 import Button from '@/components/common/Button/Button'
@@ -53,13 +53,24 @@ const LoginNationalCodeStep = () => {
             className="w-full h-12 px-2 border rounded-md border-gray-500 outline-0 font-medium text-base"
             placeholder="کد ملی"
           />
-          <Button
-            onClick={() => Login()}
-            isLoading={loginMutation.isPending}
-            className="w-full h-12 bg-[#1E94F6] hover:bg-blue-400 rounded-lg"
-          >
-            <p className="text-white font-demibold text-base ">تایید و ادامه</p>
-          </Button>
+          <div className="space-y-3">
+            <Button
+              onClick={() => Login()}
+              isLoading={loginMutation.isPending}
+              className="w-full h-12 bg-[#1E94F6] hover:bg-blue-400 rounded-lg"
+            >
+              <p className="text-white font-demibold text-base ">تایید و ادامه</p>
+            </Button>
+
+            <Link to={PATHS.SIGNUP_BOOK_FAIR}>
+              <Button
+                hoverEffect={false}
+                className="w-full h-12 bg-[#FFDE1E] border-0 rounded-lg"
+              >
+                <p className="text-black font-demibold text-base ">ورود غیر کانونی ها</p>
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
